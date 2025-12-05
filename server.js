@@ -10,13 +10,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Swagger config
 const swaggerOptions = {
   definition: {
     openapi: "3.0.0",
     info: {
       title: "API Simples",
-      version: "1.0.0",
+      version: "1.0.2",
       description: "Documentação da API Simples com Swagger"
     }
   },
@@ -26,9 +25,8 @@ const swaggerOptions = {
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// Rotas
 app.use("/v1/usuarios", usuariosRoutes);
 app.use("/v1/clientes", clientesRoutes);
 
-const PORT = 3000;
-app.listen(PORT, () => console.log(`API rodando na porta ${PORT}`));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log("API rodando na porta " + PORT));
